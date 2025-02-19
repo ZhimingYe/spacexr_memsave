@@ -90,11 +90,13 @@ process_bead_doublet <- function(cell_type_info, gene_list, UMI_tot, bead, class
     singlet_scores[type] <- get_singlet_score(cell_type_profiles, bead, UMI_tot,
                                               type, constrain, MIN.CHANGE = MIN.CHANGE)
   }
+  gc()
   min_score = 0
   first_type = NULL; second_type = NULL
   first_class = F; second_class = F #indicates whether the first (resp second) refers to a class rather than a type
   for(i in 1:(length(candidates)-1)) {
     type1 = candidates[i]
+    gc()
     for(j in (i+1):length(candidates)) {
       type2 = candidates[j]
       score = decompose_sparse(cell_type_profiles, UMI_tot, bead, type1, type2, score_mode = T, constrain = constrain, verbose = verbose, MIN.CHANGE = MIN.CHANGE)
